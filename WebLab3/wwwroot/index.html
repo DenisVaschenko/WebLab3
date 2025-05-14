@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Casdoor OpenID</title>
+    <script>
+    async function getUserInfo() {
+      try {
+        const response = await fetch('/userdata', {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+
+        const data = await response.json();
+        document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("result").textContent = "Error: " + err.message;
+      }
+    }
+
+    function login() {
+      window.location.href = "auth/login";
+    }
+    </script>
+</head>
+<body>
+    <h1>Casdoor OpenID Demo</h1>
+    <button onclick="login()">Login</button>
+    <button onclick="getUserInfo()">Get User Info</button>
+    <pre id="result"></pre>
+</body>
+</html>
